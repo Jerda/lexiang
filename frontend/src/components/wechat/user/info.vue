@@ -14,7 +14,7 @@
                 <cell title="年龄" v-model="user.age" class="change_list"></cell>
                 <cell title="邮箱" v-model="user.email" class="change_list"></cell>
             </group>
-                <x-button link="/edit_info" class="weui-btn weui-btn_default" style="width:94%;margin-top:2vh;" :disabled="is_admin?'disabled':''"><span class="change_color">修改信息</span></x-button>
+                <x-button link="/edit_info" class="weui-btn weui-btn_default" style="width:94%;margin-top:2vh;"><span class="change_color">修改信息</span></x-button>
             <toast v-model="show" :type="type" :is-show-mask="true">{{text}}</toast>
         </div>
     </div>
@@ -45,8 +45,7 @@
                         sex: 1
                     }
                 },
-                loadings:true,
-                is_admin:true
+                loadings:true
             }
         },
         methods: {
