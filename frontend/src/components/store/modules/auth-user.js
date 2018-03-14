@@ -7,6 +7,7 @@ export default {
         set_user_auth(state, payload) {
             state.username = payload.user.data.username
             state.authenticated = true
+            console.log('set_user_auth')
         },
         del_user_auth(state) {
             state.username = null
@@ -15,11 +16,13 @@ export default {
     },
     actions: {
         setAuthUser({commit, dispatch}) {
-            return axios.post('/api/user/info').then(response => {
+            axios.post('/api/user/info').then(response => {
+                console.log('info')
                 commit({
                     type: 'set_user_auth',
                     user: response.data
                 })
+                return response
             })
         },
         delAuthUser({commit}) {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Model\Enterprise;
 use App\Model\User;
+use App\Model\Enterprise;
 use App\Libraries\UserHelp;
 use Illuminate\Http\Request;
 use App\Model\EnterpriseUser;
@@ -45,7 +45,7 @@ class UserController extends BaseController
             return response()->json(['message' => $e->getMessage()]);
         }
 
-        $user = User::where('id', auth()->guard('api')->user())->update($request->all());
+        $user = User::where('id', $this->userId())->update($request->all());
 
         return response()->json(['message' => trans('system.register_success')]);
     }
@@ -143,6 +143,25 @@ class UserController extends BaseController
 
 
     /**
+     * 修改信息
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function modify(Request $request)
+    {
+        try {
+            $this->validatorForWechat($request->all());
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], config('response_error.validate'));
+        }
+
+        $user = User::where('id', $this->userId())->update($request->all());
+
+        return response()->json(['message' => trans('system.modify_success')]);
+    }
+
+
+    /**
      * 根据用户获取关注人
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -181,7 +200,10 @@ class UserController extends BaseController
         return response()->json(['data' => $enterprise]);
     }
 
-
+    /**
+     * 判断是否为管理员
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function isAdmin()
     {
         $admin = EnterpriseAdmin::where('user_id', $this->userId())->first();
@@ -237,7 +259,7 @@ class UserController extends BaseController
      */
     public function all()
     {
-        $users = User::normal()->where(formatWhere(['name']))->with('wechat')->whereHas('wechat', function ($query) {
+        $users = User::normal()->where(formatWhere(['name', 'mobile']))->with('wechat')->whereHas('wechat', function ($query) {
             $query->where(formatWhere(['nickname']));
         })->with('concern')->with('enterprises')->paginate(request()->input('limit'));
 
@@ -248,6 +270,8 @@ class UserController extends BaseController
     private function validatorForWechat($data)
     {
         $validator = Validator::make($data, [
+            'name' => 'required',
+            'email' => 'email',
         ]);
 
         if ($validator->fails()) {  //用户提交字段验证失败

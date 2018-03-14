@@ -1,9 +1,4 @@
 <?php
-Route::any('/test', function() {
-    $enterprise = \App\Model\EnterpriseUser::where('user_id', 16)->first();
-});
-
-
 /*
 |--------------------------------------------------------------------------
 | 获取验证码
@@ -64,14 +59,14 @@ Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
 
 
     });
-//    Route::group(['middleware' => 'auth:api'], function() {
-    Route::group([], function() {
+    Route::group(['middleware' => 'auth:api'], function() {
         /**
          * 用户数据路由
          */
         Route::group(['prefix' => 'user'], function() {
             //注册
             Route::post('/registerWechat', 'UserController@registerWechat');
+            Route::post('/modify', 'UserController@modify');
             //获取用户信息
             Route::post('info', 'UserController@user');
             Route::post('all', 'UserController@all')->middleware(['permission']);

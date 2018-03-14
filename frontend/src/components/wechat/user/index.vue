@@ -22,7 +22,7 @@
 <script>
 	import Nav from '../common/user_nav'
 	import Header from '../common/Header'
-	import { Cell, Group, Blur } from 'vux'
+    import { Cell, Group, Blur } from 'vux'
 
 	export default {
 		components: {
@@ -47,7 +47,6 @@
         methods: {
 		    getUser() {
 		        axios.post('api/user/info').then(response => {
-
                     this.user = response.data.data
                 })
             }

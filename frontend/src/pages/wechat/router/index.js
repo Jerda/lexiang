@@ -25,20 +25,20 @@ let routes = [
     {path: '/register', name: 'register', component: register},
     {path: '/login/:username', name: 'login', component: login},
     //个人中心
-    {path: '/user_index', name: 'user_index', component: user_index},
-    {path: '/user_info', name: 'user_info', component: user_info},
-    {path: '/edit_info', name: 'edit_info', component: edit_info},
-    {path: '/health/:user_id', name: 'health', component: health},
-    {path: '/health', name: 'health', component: health},
-    {path: '/health_detail/:health_id', name: 'health_detail', component: health_detail},
-    {path: '/concern_index', name: 'concern_index', component: concern_index},
+    {path: '/user_index', name: 'user_index', component: user_index, meta: {wechatAuth: true}},
+    {path: '/user_info', name: 'user_info', component: user_info, meta: {wechatAuth: true}},
+    {path: '/edit_info', name: 'edit_info', component: edit_info, meta: {wechatAuth: true}},
+    {path: '/health/:user_id', name: 'health', component: health, meta: {wechatAuth: true}},
+    {path: '/health', name: 'health', component: health, meta: {wechatAuth: true}},
+    {path: '/health_detail/:health_id', name: 'health_detail', component: health_detail, meta: {wechatAuth: true}},
+    {path: '/concern_index', name: 'concern_index', component: concern_index, meta: {wechatAuth: true}},
 
-    {path: '/enterprise_index', name: 'enterprise_index', component: enterprise_index},
-    {path: '/admin', name: 'admin', component: admin},
-    {path: '/enterprise_info', name: 'enterprise_info', component: enterprise_info},
-    {path: '/enterprise_edit_info', name: 'enterprise_edit_info', component: enterprise_edit_info},
+    {path: '/enterprise_index', name: 'enterprise_index', component: enterprise_index, meta: {wechatAuth: true}},
+    {path: '/admin', name: 'admin', component: admin, meta: {wechatAuth: true}},
+    {path: '/enterprise_info', name: 'enterprise_info', component: enterprise_info, meta: {wechatAuth: true}},
+    {path: '/enterprise_edit_info', name: 'enterprise_edit_info', component: enterprise_edit_info, meta: {wechatAuth: true}},
 
-    {path: '/worker_index', name: 'worker_index', component: worker_index},
+    {path: '/worker_index', name: 'worker_index', component: worker_index, meta: {wechatAuth: true}},
 
 
 ];
@@ -50,6 +50,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     //登录用户
+    let _this = this
     if (to.path.match('/username/')) {
         let arr = to.path.split('/')
         let username = arr[2]
@@ -57,12 +58,12 @@ router.beforeEach((to, from, next) => {
             //如果用户没有完善信息，跳转至信息完善页面
             axios.post('api/user/info').then(response => {
                 if (!response.data.data.mobile) {
-                    window.location.href = '/wechat.html#/register'
+                    // window.location.href = '/wechat.html#/register'
+                    next('/register')
+                } else {
+                    next('/user_index')
                 }
             })
-
-            window.location.href = '/wechat.html#/user_index'
-            // _this.$router.push({name:'user_index'})
         }).catch(error => {
 
         })
@@ -71,8 +72,8 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.wechatAuth) {
         //验证是否登录
-        // if (Store.state.authenticated || jwtToken.getToken()) {
-        if (Store.state.authenticated) {
+        if (Store.state.authenticated || jwtToken.getToken()) {
+        // if (Store.state.AuthUser.authenticated) {
             return next()
         } else {
             axios.post('api/wechat/getOauthURL', {path:to.path}).then(response => {
