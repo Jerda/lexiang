@@ -15,7 +15,7 @@
                         <el-form-item>
                             <el-input type="password" v-model="form.password" prefix-icon="el-icon-fa-lock"></el-input>
                         </el-form-item>
-                        <el-form-item>
+                        <!--<el-form-item>
                             <el-col :span="12">
                                 <el-input v-model="form.captcha" placeholder="输入验证码"></el-input>
                             </el-col>
@@ -28,7 +28,7 @@
                                      data-captcha-config="default"
                                      @click="refresh">
                             </el-col>
-                        </el-form-item>
+                        </el-form-item>-->
                         <el-form-item>
                             <el-button type="primary" @click="login">登 录</el-button>
                         </el-form-item>
@@ -72,7 +72,7 @@
                 form: {
                     username: '',
                     password: '',
-                    captcha: ''
+                    // captcha: ''
                 },
                captcha_src: '',
             }

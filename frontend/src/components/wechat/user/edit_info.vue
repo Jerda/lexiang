@@ -45,12 +45,7 @@
         },
         methods:{
             saveMes(){
-                if(this.user.name != ''&&this.user.mobile != ''&&this.user.birthday != ''&&this.user.sex != ''&&this.user.email != ''&&this.user.age!== ''){
-                    this.finall_user['name'] = this.user.name
-                    this.finall_user['mobile'] = this.user.mobile
-                    this.finall_user['birthday'] = this.user.birthday
-                    this.finall_user['sex'] = this.user.sex
-                    this.finall_user['email'] = this.user.email
+                if (this.validator()) {
                     axios.post('api/user/modify', this.finall_user).then(response => {
                         this.$vux.alert.show({
                             content: response.data.message
@@ -61,7 +56,7 @@
                             content: error.response.data.message
                         })
                     })
-                }else{
+                } else {
                     this.$vux.alert.show({
                         content: '请填写完整的数据！'
                     })
@@ -70,10 +65,20 @@
             getInfo() {
                 axios.post('api/user/info').then(response => {
                     this.user = response.data.data
-                    this.age = response.data.data.age
-                }).catch(error => {
-
                 })
+            },
+            validator() {
+                if(this.user.name != '' && this.user.mobile != '' && this.user.birthday != ''
+                    && this.user.sex != '' && this.user.email != null) {
+                    this.finall_user['name'] = this.user.name
+                    this.finall_user['mobile'] = this.user.mobile
+                    this.finall_user['birthday'] = this.user.birthday
+                    this.finall_user['sex'] = this.user.sex
+                    this.finall_user['email'] = this.user.email
+                    return true
+                } else {
+                    return false
+                }
             }
         },
         mounted() {

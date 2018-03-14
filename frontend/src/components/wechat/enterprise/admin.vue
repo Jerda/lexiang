@@ -17,7 +17,7 @@
                     position="absolute"
                     auto-scroll-to-top
                     :auto-fixed="search.auto_fixed"
-                    placeholder="搜索用户"
+                    placeholder="搜索用户(手机号)"
                     @on-submit="searchUser"
                     @on-cancel="search.result = []"
                     ref="search"></search>

@@ -8,8 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        AuthUser,
-        Login
+        AuthUser, Login
     }
 })
 
