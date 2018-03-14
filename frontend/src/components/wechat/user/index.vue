@@ -4,7 +4,7 @@
 		<blur :blur-amount=40 :url="user.wechat.avatar">
       		<p class="center"><img :src="user.wechat.avatar"></p>
     	</blur>
-		<group>
+		<group class="change_size">
             <cell title="个人资料" is-link link="user_info">
                 <img slot="icon" style="display:block;margin-right:5px;" src="../imgs/self_info.png">
             </cell>
@@ -73,5 +73,8 @@
 	}
 	.main_view{
 	background-color:#eaf8ff;
+	}
+	.change_size{
+		margin-top:-35px;
 	}
 </style>

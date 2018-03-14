@@ -13,7 +13,8 @@
                   v-for="(item, index) in current.fields"
                   :header="{title: item}" :key="index" class="change_border_bottom">
                 <p v-if="current.data[current.fields['db_name']][index] != ''" slot="content"
-                   class="content">{{ current.data[current.fields['db_name']][index] }}</p>
+                   class="content">{{ current.data[current.fields['db_name']][index] }}
+                </p>
                 <p v-else slot="content" class="content">无数据</p>
             </card>
         </div>

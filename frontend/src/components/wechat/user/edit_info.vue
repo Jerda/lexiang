@@ -90,11 +90,11 @@
         height:5vh;
     }
     .change_height_{
-        height:8vh;
+        height:10vh;
     }
     .change_heights{
         height:5vh;
-        text-decoration:none;
+        text-decoration:none
     }
     .change_margin_top{
         margin-top:-20px;
