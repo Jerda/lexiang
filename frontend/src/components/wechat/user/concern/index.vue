@@ -2,8 +2,8 @@
     <div>
         <x-header title="我的关注"></x-header>
         <tab>
-            <tab-item selected @on-item-click="list">关注的人</tab-item>
-            <tab-item @on-item-click="showInvite">邀请</tab-item>
+            <tab-item selected @on-item-click="list">我关注的人</tab-item>
+            <tab-item @on-item-click="showInvite">收到的邀请</tab-item>
         </tab>
         <list :show="show.list" ref="list"></list>
         <invite :show="show.invite" @changed="refreshList"></invite>

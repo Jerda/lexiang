@@ -25,10 +25,7 @@
                         ref="search" class="change_margin"></search>
                 <group>
                     <cell v-for="(item,args) in search.result" :title="item.name" :key="args" class="change_height_">
-                        <x-button style="height:5vh;line-height:25%;background:rgb(87,255,171);color:white;"
-                                  @click.native="sendConcernRequest(item.id)">
-                            关注
-                        </x-button>
+                        <x-button @click.native="sendConcernRequest(item.id)" style="height:5vh;line-height:25%;background:rgb(87,255,171);color:white;">关注</x-button>
                     </cell>
                 </group>
                 <x-button @click.native="sendConcern.show = false" style="width:94%;margin-top:2vh;">取消</x-button>
