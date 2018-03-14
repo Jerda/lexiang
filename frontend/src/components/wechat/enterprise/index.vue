@@ -37,7 +37,8 @@
                 <div class="change_error_mes" v-if="search.result == ''">
                     <img slot="icon" style="display:block;margin-right:5px;" src="../imgs/error.png" class="change_error">
                     <p style="margin-left: -20px">{{ info }}</p>
-                    <a link="" style="margin-left: -5px">查看驳回信息</a>
+                    <x-button v-if="is_refuse" class="change_margin_left" @click.native="getRefuseMes">查看驳回信息</x-button>
+                    <!--<a link="" style="margin-left: -5px">查看驳回信息</a>-->
                 </div>
             </div>
         </div>
@@ -62,7 +63,8 @@
                     data: '',
                     result: []
                 },
-                info: ''
+                info: '',
+                is_refuse:false
             }
         },
         methods: {
@@ -72,6 +74,7 @@
                         this.info = '您的申请还未通过'
                     } else if (response.data.data.status == 5) {
                         this.info = '您的申请已被驳回'
+                        this.is_refuse = true
                     } else if (response.data.data.status == 3){
                         this.info = '您的账号已被企业禁用'
                     } else if (response.data.data.status == 2) {
@@ -89,6 +92,11 @@
                     }
                 }).catch(error => {
 
+                })
+            },
+            getRefuseMes(){
+                axios.post('api/user/getRejectListForApplyWorker').then(response => {
+                    this.$router.push('/enterprise_ref')
                 })
             },
             searchEnterprise() {
@@ -126,5 +134,8 @@
     }
     .change_error_mes{
         margin-left:40vw;
+    }
+    .change_margin_left{
+        margin-left:-18vw;
     }
 </style>

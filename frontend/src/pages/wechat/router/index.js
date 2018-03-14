@@ -17,6 +17,7 @@ const enterprise_index = () => import('@/components/wechat/enterprise/index')
 const admin = () => import('@/components/wechat/enterprise/admin')
 const enterprise_info = () => import('@/components/wechat/enterprise/info')
 const enterprise_edit_info = () => import('@/components/wechat/enterprise/edit_info')
+const enterprise_ref = () => import('@/components/wechat/enterprise/ref')
 
 const worker_index = () => import('@/components/wechat/worker/index')
 
@@ -36,6 +37,8 @@ let routes = [
     {path: '/enterprise_index', name: 'enterprise_index', component: enterprise_index, meta: {wechatAuth: true}},
     {path: '/admin', name: 'admin', component: admin, meta: {wechatAuth: true}},
     {path: '/enterprise_info', name: 'enterprise_info', component: enterprise_info, meta: {wechatAuth: true}},
+    {path: '/enterprise_ref', name: 'enterprise_ref', component: enterprise_ref, meta: {wechatAuth: true}},
+
     {path: '/enterprise_edit_info', name: 'enterprise_edit_info', component: enterprise_edit_info, meta: {wechatAuth: true}},
 
     {path: '/worker_index', name: 'worker_index', component: worker_index, meta: {wechatAuth: true}},
