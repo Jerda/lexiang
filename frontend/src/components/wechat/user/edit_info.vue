@@ -95,7 +95,7 @@
         height:5vh;
     }
     .change_height_{
-        height:10vh;
+        height:8vh;
     }
     .change_heights{
         height:5vh;

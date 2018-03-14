@@ -7,7 +7,7 @@
                 <img slot="icon" :src="user.concern_user.wechat.avatar" class="change_height_img">
                 <div>
                     <x-button @click.native="toConcernUser(user.concern_user.id)" style="display:inline;margin-left:-20vw;height:5vh;line-height:25%;">查看</x-button>
-                    <x-button @click.native="unConcern(user.concern_user.id)" style="display:inline;margin-top:0;height:5vh;line-height:25%;background:#ff3232;color:white;">取关</x-button>
+                    <x-button @click.native="confirm_unConcern(user.concern_user.id)" style="display:inline;margin-top:0;height:5vh;line-height:25%;background:#ff3232;color:white;">取关</x-button>
                 </div>
             </cell>
         </group>
@@ -78,6 +78,15 @@
                     this.$vux.alert.show({
                         content: response.data.message
                     })
+                })
+            },
+            confirm_unConcern(concern_user_id){
+                let _this = this
+                this.$vux.confirm.show({
+                    title: '确定要对改用户取消关注？',
+                    onConfirm() {
+                        _this.unConcern(concern_user_id)
+                    }
                 })
             },
             searchUser(mobile) {
