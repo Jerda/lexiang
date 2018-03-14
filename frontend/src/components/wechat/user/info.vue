@@ -18,6 +18,7 @@
                           style="width:94%;margin-top:2vh;">
                     <span class="change_color">修改信息</span>
                 </x-button>
+
             <toast v-model="show" :type="type" :is-show-mask="true">{{text}}</toast>
         </div>
     </div>
@@ -48,8 +49,7 @@
                         sex: 1
                     }
                 },
-                loadings:true,
-                is_admin:true
+                loadings:true
             }
         },
         methods: {

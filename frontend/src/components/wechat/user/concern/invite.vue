@@ -1,6 +1,6 @@
 <template>
     <div v-show="isShow">
-        <x-button @click.native="sendConcern.show = true">发起关注</x-button>
+
         <group class="ppp">
             <cell v-for="(user,index) in list"
                   :title="user.invite_user.name"
@@ -12,6 +12,7 @@
                 </div>
             </cell>
         </group>
+        <x-button @click.native="sendConcern.show = true" style="margin-bottom: 2px">发起关注</x-button>
 
         <popup v-model="user_info.show" height="100%">
             <group v-if="user_info.show" class="change_margin_top">

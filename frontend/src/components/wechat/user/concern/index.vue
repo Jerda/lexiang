@@ -60,7 +60,7 @@
         height:5vh;
     }
     .ppp{
-        height:81vh;
+        height:71vh;
         overflow:auto;
         margin-top:-20px;
         background:white;

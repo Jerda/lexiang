@@ -26,7 +26,7 @@
                 <div class="change_padding">
                     <x-textarea type="text" v-model="reject.data" class="change_allborder"></x-textarea>
                 </div>
-                <x-button @click.native="actionReject" style="display:inline;height:5vh;line-height:25%;background:#57ffab;width:48%;">提交</x-button>
+                <x-button @click.native="actionReject" style="display:inline;height:5vh;line-height:25%;background:#57ffab;width:48%;margin-bottom: 2px">提交</x-button>
                 <x-button @click.native="dialogShow = false" style="display:inline;margin-top:0;height:5vh;line-height:25%;width:48%;">取消</x-button>
             </x-dialog>
         </popup>
@@ -83,12 +83,13 @@
                 })
             },
             agree(user_id) {
+                let _this = this
                 this.$vux.confirm.show({
                     content: '确认同意用户申请',
                     onConfirm() {
                         axios.post('api/enterprise/agreeWorkerJoin', {user_id: user_id}).then(response => {
-                            this.getExamineWorkers()
-                            this.$emit.change()
+                            _this.getExamineWorkers()
+                            _this.$emit('change')
                         }).catch(error => {
 
                         })

@@ -5,8 +5,8 @@
             <tab-item selected @on-item-click="workerList">已加入员工</tab-item>
             <tab-item @on-item-click="showExamine">待审核员工</tab-item>
         </tab>
-        <list :show="show.worker_list" class="change_height"></list>
-        <examine :show="show.examine"></examine>
+        <list :show="show.worker_list" class="change_height" ref="list"></list>
+        <examine :show="show.examine" @change="change_page"></examine>
     </div>
 </template>
 
@@ -35,6 +35,9 @@
             showExamine() {
                 this.show.examine = true
                 this.show.worker_list = false
+            },
+            change_page(){
+                this.$refs.list.getWorkers()
             }
         },
         mounted() {
