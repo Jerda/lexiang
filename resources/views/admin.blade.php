@@ -5,13 +5,13 @@
     <meta name=viewport content="width=device-width,initial-scale=1">
     <title>frontend</title>
     <link rel=stylesheet href=https://unpkg.com/element-ui/lib/theme-chalk/index.css>
-    <link href="{{ asset('static/css/admin.cc69e29a3eb5aca280a43c420f161461.css') }}" rel=stylesheet>
+    <link href="{{ asset('static/css/admin.4ff93b089b0bbac3f0a4480ded5fb28c.css') }}" rel=stylesheet>
 </head>
 <body style="margin: 0px">
 <div id=app></div>
-<script type=text/javascript src="{{ asset('static/js/manifest.41d44cf233af060b0a62.js') }}"></script>
-<script type=text/javascript src="{{ asset('static/js/vendor.67f2036abe7681c7c110.js') }}"></script>
-<script type=text/javascript src="{{ asset('static/js/admin.556387b5d713e561fb19.js') }}"></script>
+<script type=text/javascript src="{{ asset('static/js/manifest.0a2b59a8e441094b6a8f.js') }}"></script>
+<script type=text/javascript src="{{ asset('static/js/vendor.fda7ebf97bc4c5325e82.js') }}"></script>
+<script type=text/javascript src="{{ asset('static/js/admin.02339ebbf8a12afd55dc.js') }}"></script>
 </body>
 </html>
 <style>

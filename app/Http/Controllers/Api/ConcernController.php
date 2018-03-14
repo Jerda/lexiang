@@ -6,6 +6,7 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use App\Model\ConcernInvite;
 use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 class ConcernController extends BaseController
 {
@@ -38,9 +39,11 @@ class ConcernController extends BaseController
      */
     public function sendRequest(Request $request)
     {
-        if (!$this->checkHasInvite($request->input('invitees_user_id'))) {
-            return response()->json(['message' => trans('system.can_not_add_repeat')],
-                config('response_error.validate'));
+        try {
+            $this->checkHasConcern($request->input('invitees_user_id'));
+            $this->checkHasInvite($request->input('invitees_user_id'));
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
         }
 
         ConcernInvite::create([
@@ -76,6 +79,22 @@ class ConcernController extends BaseController
 
 
     /**
+     * 拒绝邀请
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refuseRequest(Request $request)
+    {
+        ConcernInvite::where([
+            'invitees_user_id' => $this->userId(),
+            'user_id' => $request->input('invitees_user_id'),
+            'status' => 0])->update(['status' => 3]);
+
+        return response()->json(['message' => trans('system.operate_success')]);
+    }
+
+
+    /**
      * 获取邀请列表
      * @return \Illuminate\Http\JsonResponse
      */
@@ -96,21 +115,53 @@ class ConcernController extends BaseController
      */
     public function getInviteeList()
     {
-        $res = ConcernInvite::where('invitees_user_id', $this->userId())->get();
+        $res = ConcernInvite::where(['invitees_user_id' => $this->userId(), 'status' => 0])
+            ->with(['user' => function($query) {
+                $query->with('wechat');
+            }])->get();
 
         return response()->json(['data' => $res]);
     }
 
 
     /**
+     * 取消关注
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancel(Request $request)
+    {
+        Concern::where(['user_id' => $this->userId(), 'concern_user_id' => $request->input('concern_user_id')])
+            ->first();
+
+        return response()->json(['message' => trans('system.operate_success')]);
+    }
+
+
+    /**
      * 检测是否已经关注
      * @param $invitees_user_id
-     * @return bool
+     */
+    private function checkHasConcern($invitees_user_id)
+    {
+        $res = Concern::where(['user_id' => $this->userId(), 'concern_user_id' => $invitees_user_id])->first();
+
+        if (!empty($res)) {
+            throw new Exception(trans('system.can_not_add_repeat'));
+        }
+    }
+
+
+    /**
+     * 检测是否已发送邀请
+     * @param $invitees_user_id
      */
     private function checkHasInvite($invitees_user_id)
     {
-        $res = ConcernInvite::where(['user_id' => $this->userId(), 'invitees_user_id' => $invitees_user_id])->first();
+        $res = ConcernInvite::where(['user_id' => $this->userId(), 'status' => 0, 'invitees_user_id' => $invitees_user_id])->first();
 
-        return empty($res) ? true : false;
+        if (!empty($res)) {
+            throw new Exception(trans('system.concern_request_has'));
+        }
     }
 }

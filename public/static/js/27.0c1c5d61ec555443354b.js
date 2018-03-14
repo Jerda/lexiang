@@ -1,0 +1,2 @@
+webpackJsonp([27],{"6cqi":function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var s={render:function(){var e=this.$createElement;return(this._self._c||e)("span",[this._v("登录中...")])},staticRenderFns:[]},r=n("VU/8")({mounted:function(){var e=this;this.$store.dispatch("loginRequest",{username:"oi5N40led-7GHbrxULUdTwX-U7tM",password:"oi5N40led-7GHbrxULUdTwX-U7tM"}).then(function(e){}).catch(function(t){e.$message.error(t.response.data.message)})}},s,!1,null,null,null);t.default=r.exports}});
+//# sourceMappingURL=27.0c1c5d61ec555443354b.js.map

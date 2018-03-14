@@ -41,4 +41,5 @@ return [
     'email_wrong' => '邮箱格式不正确',
     'health_client_validate_error' => '客户端验证失败',
     'health_input_success' => '数据录入成功',
+    'concern_request_has' => '不能重复发送请求，正在等待对方确认',
 ];

@@ -44,6 +44,7 @@ class WeChatController extends BaseController
 
         //跳转前端一个指定登录路由
         return response('')->header('location', 'http://localhost:8080/wechat.html#/username/'.$user->username);
+//        return response('')->header('location', 'http://120.78.56.75/wechat.html#/username/'.$user->username);
     }
 
 

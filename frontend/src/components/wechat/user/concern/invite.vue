@@ -3,11 +3,11 @@
 
         <group class="ppp">
             <cell v-for="(user,index) in list"
-                  :title="user.invite_user.name"
+                  :title="user.user.name"
                   :key="index" class="change_height_">
-                <img slot="icon" :src="user.invite_user.wechat.avatar" class="change_height_img">
+                <img slot="icon" :src="user.user.wechat.avatar" class="change_height_img">
                 <div>
-                    <x-button @click.native="toConcernUser(user.invite_user.id)" style="display:inline;margin-left:-20vw;height:5vh;line-height:25%;">查看</x-button>
+                    <x-button @click.native="toConcernUser(user.user.id)" style="display:inline;margin-left:-20vw;height:5vh;line-height:25%;">查看</x-button>
                     <x-button @click.native="agree(user.id)" style="display:inline;margin-top:0;height:5vh;line-height:25%;background:#57ffab;">同意</x-button>
                 </div>
             </cell>
@@ -81,7 +81,7 @@
         },
         methods: {
             getInviteList() {
-                axios.post('api/concern/getInviteList').then(response => {
+                axios.post('api/concern/getInviteeList').then(response => {
                     this.list = response.data.data
                 })
             },
@@ -130,7 +130,7 @@
         },
     }
 </script>
-<style>
+<style scoped>
     .change_list{
         height:5vh;
     }

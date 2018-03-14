@@ -212,8 +212,9 @@ Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
          */
         Route::group(['prefix' => 'concern'], function() {
             Route::post('sendRequest', 'ConcernController@sendRequest');
-            Route::post('getInviteList', 'ConcernController@getInviteList');
+            Route::post('getInviteeList', 'ConcernController@getInviteeList');
             Route::post('agreeRequest', 'ConcernController@agreeRequest');
+            Route::post('cancel', 'ConcernController@cancel');
         });
     });
 });
