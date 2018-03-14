@@ -131,8 +131,10 @@ class ConcernController extends BaseController
      */
     public function cancel(Request $request)
     {
-        Concern::where(['user_id' => $this->userId(), 'concern_user_id' => $request->input('concern_user_id')])
+        $res = Concern::where(['user_id' => $this->userId(), 'concern_user_id' => $request->input('concern_user_id')])
             ->first();
+
+        $res->delete();
 
         return response()->json(['message' => trans('system.operate_success')]);
     }

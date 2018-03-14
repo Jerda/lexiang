@@ -79,6 +79,7 @@ Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
             Route::post('getUserByMobile', 'UserController@getUserByMobile')->middleware(); //获取用户关注人
             Route::post('getEnterprise', 'UserController@getEnterprise');
             Route::post('isAdmin', 'UserController@isAdmin');
+            Route::post('applyJoinEnterprise', 'UserController@applyJoinEnterprise');
         });
         /**
          * Wechat
@@ -178,6 +179,7 @@ Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
             Route::post('modifyStatus', 'EnterpriseController@status');
             Route::post('agreeWorkerJoin', 'EnterpriseController@agreeWorkerJoin');
             Route::post('removeWorker', 'EnterpriseController@removeWorker');
+            Route::post('getByName', 'EnterpriseController@getByName');
         });
         /**
          * 企业管理员

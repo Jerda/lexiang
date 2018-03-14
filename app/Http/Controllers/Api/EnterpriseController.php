@@ -190,6 +190,19 @@ class EnterpriseController extends BaseController
     }
 
 
+    /**
+     * 根据名称获取企业
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getByName(Request $request)
+    {
+        $enterprises = Enterprise::where(formatWhere(['name']))->where('status', 1)->get();
+
+        return response()->json(['data' => $enterprises]);
+    }
+
+
     public function checkIsRegister()
     {
 

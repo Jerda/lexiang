@@ -15,8 +15,7 @@ class OperateObserver
 
     public function creating(Operate $operate)
     {
-//        $operate->operator = auth()->guard('api')->user()->id;
-        $operate->operator = 11;
+        $operate->operator = auth()->guard('api')->user()->id;
     }
 
 

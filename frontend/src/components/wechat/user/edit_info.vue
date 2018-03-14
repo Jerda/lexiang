@@ -4,8 +4,8 @@
         <group class="change_margin_top">
             <x-input title="姓名" class="change_height" v-model="user.name"></x-input>
             <x-input title="手机号" class="change_height" v-model="user.mobile"></x-input>
-            <datetime title="出生日期" class="change_heights" v-model="user.birthday"></datetime>
-            <selector title="性别" :options="options.sex" class="change_height_" v-model="user.sex"></selector>
+            <datetime title="出生日期" class="change_heights" v-model="user.birthday" :min-year=1900></datetime>
+            <!--<selector title="性别" :options="options.sex" class="change_height_" v-model="user.wechat.sex" placeholder="请选择"></selector>-->
             <x-input title="邮箱" class="change_height" v-model="user.email"></x-input>
         </group>
             <x-button style="width:94%;margin-top:2vh;" @click.native="saveMes"><span class="sure">确 定</span></x-button>
@@ -35,7 +35,6 @@
                     name:'',
                     mobile:'',
                     birthday:'',
-                    sex:'',
                     email:''
                 },
                 age:'',
@@ -68,12 +67,10 @@
                 })
             },
             validator() {
-                if(this.user.name != '' && this.user.mobile != '' && this.user.birthday != ''
-                    && this.user.sex != '' && this.user.email != null) {
+                if(this.user.name != '' && this.user.mobile != '' && this.user.birthday != '' && this.user.email != '') {
                     this.finall_user['name'] = this.user.name
                     this.finall_user['mobile'] = this.user.mobile
                     this.finall_user['birthday'] = this.user.birthday
-                    this.finall_user['sex'] = this.user.sex
                     this.finall_user['email'] = this.user.email
                     return true
                 } else {
@@ -87,7 +84,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .sure{
         color:black;
     }

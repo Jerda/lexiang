@@ -189,7 +189,7 @@ class UserController extends BaseController
      */
     public function getEnterprise()
     {
-        $res = EnterpriseUser::where('user_id', $this->userId())->first();
+        $res = EnterpriseUser::where(['user_id' => $this->userId()])->first();
 
         if (!empty($res)) {
             $enterprise = Enterprise::where('id', $res->enterprise_id)->first();
@@ -267,11 +267,31 @@ class UserController extends BaseController
     }
 
 
+    /**
+     * 申请加入企业
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function applyJoinEnterprise(Request $request)
+    {
+        User::where('id', $this->userId())->update(['status' => config('code.user.status.join_enterprise')]);
+
+        EnterpriseUser::create([
+            'enterprise_id' => $request->input(['enterprise_id']),
+            'user_id' => $this->userId()
+        ]);
+
+        return response()->json(['message' => trans('system.operate_success')]);
+    }
+
+
     private function validatorForWechat($data)
     {
         $validator = Validator::make($data, [
             'name' => 'required',
-            'email' => 'email',
+            'email' => 'required|email',
+        ], [
+            'email.email' => trans('system.email_wrong')
         ]);
 
         if ($validator->fails()) {  //用户提交字段验证失败
