@@ -135,6 +135,6 @@
         height:5vh;
     }
     .change_margin_top{
-        margin-top:-20px;
+        margin-top:-20px
     }
 </style>
