@@ -7,8 +7,8 @@
                   :key="index" class="change_height_">
                 <img slot="icon" :src="user.invite_user.wechat.avatar" class="change_height_img">
                 <div>
-                    <x-button @click.native="toConcernUser(user.invite_user.id)">查看</x-button>
-                    <x-button @click.native="agree(user.id)">同意</x-button>
+                    <x-button @click.native="toConcernUser(user.invite_user.id)" style="display:inline;margin-left:-20vw;height:5vh;line-height:25%;">查看</x-button>
+                    <x-button @click.native="agree(user.id)" style="display:inline;margin-top:0;height:5vh;line-height:25%;background:#57ffab;">同意</x-button>
                 </div>
             </cell>
         </group>
@@ -26,7 +26,7 @@
                 <cell title="年龄" v-model="user_info.user.age" class="change_list"></cell>
                 <cell title="邮箱" v-model="user_info.user.email" class="change_list"></cell>
             </group>
-            <x-button @click.native=" user_info.show = false">关闭</x-button>
+            <x-button @click.native=" user_info.show = false" style="width:94%;margin-top:3vh;">关闭</x-button>
         </popup>
 
         <popup v-model="sendConcern.show" height="100%" style="background:white;">
@@ -130,3 +130,11 @@
         },
     }
 </script>
+<style>
+    .change_list{
+        height:5vh;
+    }
+    .change_margin_top{
+        margin-top:-20px
+    }
+</style>
