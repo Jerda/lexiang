@@ -6,202 +6,68 @@ use Overtrue\EasySms\EasySms;
 
 class SMS
 {
-    private $config = [
-        // HTTP 请求的超时时间（秒）
-        'timeout'  => 5.0,
+    //Interface URL Used to send SMS
+    const API_SEND_URL = 'http://intapi.253.com/send/json?';
+    //Interface URL Used to Query SMS balance
+    const API_BALANCE_QUERY_URL = 'http://intapi.253.com/balance/json?';
 
-        // 默认发送配置
-        'default'  => [
-            // 网关调用策略，默认：顺序调用
-            'strategy' => \Overtrue\EasySms\Strategies\OrderStrategy::class,
+    const API_ACCOUNT = 'I3442624';//Get SMS Account  from  https://zz.253.com/site/login.html
 
-            // 默认可用的发送网关
-            'gateways' => [
-                'yunpian', 'aliyun', 'alidayu',
-            ],
-        ],
-        // 可用的网关配置
-        'gateways' => [
-            'errorlog' => [
-                'file' => '/tmp/easy-sms.log',
-            ],
-            'yunpian'  => [
-                'api_key' => '824f0ff2f71cab52936axxxxxxxxxx',
-            ],
-            'aliyun'   => [
-                'access_key_id'     => '',
-                'access_key_secret' => '',
-                'sign_name'         => '',
-            ],
-            'alidayu'  => [
-                //...
-            ],
-        ],
-    ];
-
-
-    private $service_provider = [
-        'aliyun' => '阿里云',
-        'yunpian' => '云片',
-        'submail' => 'Submail',
-        'luosimao' => '螺丝帽',
-//        'yuntongxun' => '容联云通讯',
-        'huyi' => '互亿无线',
-        'juhe' => '聚合数据',
-//        'sendcloud' => 'SendCloud',
-        'baidu' => '百度云',
-        'huaxin' => '华信短信',
-        'chuanglan' => '253云通讯（创蓝）',
-        'rongcloud' => '融云',
-        'tianyiwuxian' => '天毅无线',
-        'twilio' => 'twilio',
-    ];
-
-
-    private $gateway_rules = [
-        //阿里云
-        'aliyun'       => ['access_key_id', 'access_key_secret', 'sign_name'],
-        //云片
-        'yunpian'      => ['api_key'],
-        //Submail
-        'submail'      => ['app_id', 'app_key', 'project'],
-        //螺丝帽
-        'luosimao'     => ['api_key'],
-        //容联云通讯
-//        'yuntongxun'   => ['app_id', 'account_sid', 'account_token', 'is_sub_account' => false],
-        //互亿无线
-        'huyi'         => ['api_id', 'api_key'],
-        //聚合数据
-        'juhe'         => ['app_key'],
-        //SendCloud
-//        'sendcloud'    => ['sms_user', 'sms_key', 'timestamp' => false],// 是否启用时间戳
-        //百度云
-        'baidu'        => ['ak', 'sk', 'invoke_id', 'domain'],
-        //华信短信
-        'huaxin'       => ['user_id', 'password', 'account', 'ip', 'ext_no'],
-        //253云通讯（创蓝）
-        'chuanglan'    => ['username', 'password'],
-        //融云
-        'rongcloud'    => ['app_key', 'app_secret'],
-        //天毅无线
-        'tianyiwuxian' => ['username', 'password', 'gwid'],
-        //twilio
-        'twilio'       => ['account_sid', 'from', 'token']
-        ];
-
-
-    /*private $gateway_rules = [
-        //阿里云
-        'aliyun' => [
-            'access_key_id' => '',
-            'access_key_secret' => '',
-            'sign_name' => '',
-        ],
-        //云片
-        'yunpian' => [
-            'api_key' => '',
-        ],
-        //Submail
-        'submail' => [
-            'app_id' => '',
-            'app_key' => '',
-            'project' => '',
-        ],
-        //螺丝帽
-        'luosimao' => [
-            'api_key' => '',
-        ],
-        //容联云通讯
-        'yuntongxun' => [
-            'app_id' => '',
-            'account_sid' => '',
-            'account_token' => '',
-            'is_sub_account' => false,
-        ],
-        //互亿无线
-        'huyi' => [
-            'api_id' => '',
-            'api_key' => '',
-        ],
-        //聚合数据
-        'juhe' => [
-            'app_key' => '',
-        ],
-        //SendCloud
-        'sendcloud' => [
-            'sms_user' => '',
-            'sms_key' => '',
-            'timestamp' => false, // 是否启用时间戳
-        ],
-        //百度云
-        'baidu' => [
-            'ak' => '',
-            'sk' => '',
-            'invoke_id' => '',
-            'domain' => '',
-        ],
-        //华信短信
-        'huaxin' => [
-            'user_id'  => '',
-            'password' => '',
-            'account'  => '',
-            'ip'       => '',
-            'ext_no'   => '',
-        ],
-        //253云通讯（创蓝）
-        'chuanglan' => [
-            'username'  => '',
-            'password' => '',
-        ],
-        //融云
-        'rongcloud' => [
-            'app_key' => '',
-            'app_secret' => '',
-        ],
-        //天毅无线
-        'tianyiwuxian' => [
-            'username' => '', //用户名
-            'password' => '', //密码
-            'gwid' => '', //网关ID
-        ],
-        //twilio
-        'twilio' => [
-            'account_sid' => '', // sid
-            'from' => '', // 发送的号码 可以在控制台购买
-            'token' => '', // apitoken
-        ],
-    ];*/
-
-    private $sms;
+    const API_PASSWORD ='Oqowe1sxC';//Get SMS Password  from https://zz.253.com/site/login.html
 
     /**
-     * SMS constructor.
-     * @param array $config
+     * 发送短信
+     * @param $mobile
+     * @param $message
+     * @return mixed
      */
-    /*public function __construct(array $config)
-    {
-        $sms = new EasySms($config);
-    }*/
+    public function send($mobile, $message) {
+        //创蓝接口参数
+        $postArr = array (
+            'account'  =>  self::API_ACCOUNT,
+            'password' => self::API_PASSWORD,
+            'msg' => $message,
+            'mobile' => '86'.$mobile
+        );
 
-
-    public function options()
-    {
-
-    }
-
-
-    public function rulesForServiceProvider($service_provider)
-    {
-        return $this->gateway_rules[$service_provider];
+        $result = $this->curlPost( self::API_SEND_URL , $postArr);
+        return $result;
     }
 
 
     /**
-     * 获取服务提供商
-     * @return array
+     * 通过CURL发送HTTP请求
+     * @param string $url  //请求URL
+     * @param array $postFields //请求参数
+     * @return mixed
      */
-    public function serviceProviders()
-    {
-        return $this->service_provider;
+    private function curlPost($url,$postFields){
+        $postFields = json_encode($postFields);
+        $ch = curl_init ();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json; charset=utf-8'
+            )
+        );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $postFields);
+        curl_setopt( $ch, CURLOPT_TIMEOUT,1);
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $ret = curl_exec ( $ch );
+        if (false == $ret) {
+            $result = curl_error(  $ch);
+        } else {
+            $rsp = curl_getinfo( $ch, CURLINFO_HTTP_CODE);
+            if (200 !== $rsp) {
+                $result = "请求状态 ". $rsp . " " . curl_error($ch);
+            } else {
+                $result = $ret;
+            }
+        }
+        curl_close ( $ch );
+        return $result;
     }
+
 }

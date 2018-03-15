@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Model\User;
+use App\Model\Operate;
 use App\Model\Enterprise;
 use App\Libraries\UserHelp;
 use Illuminate\Http\Request;
@@ -213,6 +214,18 @@ class UserController extends BaseController
 
 
     /**
+     * 获取员工申请类型的驳回列表
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRejectListForApplyWorker()
+    {
+        $data = Operate::where(['model_id' => $this->userId(), 'type' => config('code.operate_type.reject.worker')])->get();
+
+        return response()->json(['data' => $data]);
+    }
+
+
+    /**
      * 验证用户注册数据
      * 验证失败抛出错误
      * @param $data 验证数据
@@ -289,7 +302,9 @@ class UserController extends BaseController
     {
         $validator = Validator::make($data, [
             'name' => 'required',
-            'email' => 'required|email',
+            'mobile' => 'required',
+            'birthday' => 'required',
+            'email' => 'email|required'
         ], [
             'email.email' => trans('system.email_wrong')
         ]);

@@ -9,9 +9,9 @@
             <x-input title="发送验证码" class="weui-vcode">
                 <x-button slot="right" type="primary" mini>发送验证码</x-button>
             </x-input>
-            <x-input title="加入企业">
+            <!--<x-input title="加入企业">
                 <x-button slot="right" typp="primary" mini @click.native="showSearchEnterprise = true">查询企业</x-button>
-            </x-input>
+            </x-input>-->
         </group>
         <group>
             <x-button type="primary" @click.native="judeg">注册</x-button>

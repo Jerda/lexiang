@@ -42,4 +42,6 @@ return [
     'health_client_validate_error' => '客户端验证失败',
     'health_input_success' => '数据录入成功',
     'concern_request_has' => '不能重复发送请求，正在等待对方确认',
+    'sms_success' => '短信发送成功',
+    'sms_error' => '短信发送失败'
 ];
