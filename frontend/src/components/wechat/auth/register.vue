@@ -7,7 +7,7 @@
             <x-input title="邮箱" v-model="form.email"></x-input>
             <x-input title="手机号" v-model="form.mobile"></x-input>
             <x-input title="发送验证码" class="weui-vcode" v-model="verify">
-                <x-button slot="right" type="primary" mini @click.native="getVerify(form.mobile)">发送验证码</x-button>
+                <x-button slot="right" type="primary" mini @click.native="getVerify(form.mobile,$event)" :style="is_disabled?disabled_style:''">发送验证码{{show_count}}</x-button>
             </x-input>
         </group>
         <group>
@@ -37,7 +37,13 @@
                     name: '', mobile: '', birthday: '',sex:'', email:''
                 },
                 verify:'',
-                is_verify:''
+                is_verify:'',
+                show: true,
+                count: '',
+                timer: null,
+                disabled_style:'background:rgba(11, 178, 12, 0.45)',
+                is_disabled:false,
+                show_count: ''
             }
         },
         methods: {
@@ -65,15 +71,43 @@
 
                 })
             },
-            getVerify(mobile){
-                axios.post('api/sms/sendSMSCode', {mobile:mobile}).then(response => {
-                    console.log(response.data.data)
-                    this.is_verify = response.data.data;
-                }).catch(error => {
-                    this.$vux.alert.show({
-                        content:response.data.message
+            getCode(dom){
+                const TIME_COUNT = 30;
+                if (!this.timer) {
+                    this.count = TIME_COUNT;
+                    this.show = false;
+                    this.timer = setInterval(() => {
+                        if (this.count > 0 && this.count <= TIME_COUNT) {
+                            this.count--;
+                            this.show_count = '('+this.count+'s)'
+                        } else {
+                            this.show = true;
+                            dom.removeAttribute('disabled');
+                            this.is_disabled = false;
+                            clearInterval(this.timer);
+                            this.timer = null;
+                        }
+                    }, 1000)
+                }
+            },
+            getVerify(mobile,event){
+                this.getCode(event.target)
+                this.is_disabled = true
+                event.target.setAttribute('disabled','disabled')
+                if(mobile != ''){
+                    axios.post('api/sms/sendSMSCode', {mobile:mobile}).then(response => {
+                        // console.log(response.data.data)
+                        this.is_verify = response.data.data;
+                    }).catch(error => {
+                        this.$vux.alert.show({
+                            content:response.data.message
+                        })
                     })
-                })
+                }else{
+                    this.$vux.alert.show({
+                        content:'请输入手机号！'
+                    })
+                }
             }
         }
     }
