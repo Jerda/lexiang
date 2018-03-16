@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api\System;
 
+use App\Libraries\SMS\SMS;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
-use Facades\App\Libraries\SMS\SMS;
 
 class SMSController extends BaseController
 {
@@ -12,24 +13,46 @@ class SMSController extends BaseController
     | 短信控制器
     |--------------------------------------------------------------------------
     */
+    public $sms;
 
-    /**
-     * 获取服务器网关规则
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function ruleByServiceProvider()
+    public $message = [
+        'code' => '您的验证码为：'
+    ];
+
+
+    public function __construct()
     {
-        return response()->json(['data' => SMS::rulesForServiceProvider(request()->input('service_provider'))]);
+        $this->sms = new SMS();
     }
 
 
     /**
-     * 获取服务商
+     * 发送验证码
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     * {'aliyun': '阿里云', ....}
      */
-    public function serviceProviders()
+    public function sendSMSCode(Request $request)
     {
-        return response()->json(['data' => SMS::serviceProviders()]);
+        $code = $this->makeCode();
+
+        $res = json_decode($this->sms->send($request->input('mobile'), $this->message['code'].$code));
+
+        if ($res->code == 0) {
+            return response()->json(['data' => $code]);
+        } else {
+            return response()->json(['message' => $res->error], config('response_error.error'));
+        }
+    }
+
+
+    /**
+     * 验证码
+     * @return int
+     */
+    private function makeCode()
+    {
+        $code = rand(1000, 9999);
+
+        return $code;
     }
 }

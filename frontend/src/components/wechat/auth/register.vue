@@ -11,13 +11,15 @@
             </x-input>
         </group>
         <group>
-            <x-button type="primary" @click.native="judeg" style="width: 94%">注册</x-button>
+            <x-button type="primary" @click.native="register" style="width: 94%">注册</x-button>
+            <!--<x-button type="primary" @click.native="judeg" style="width: 94%">注册</x-button>-->
         </group>
 
     </div>
 </template>
 
 <script>
+    import Store from '@/components/store/index'
     import { XHeader, Group, XInput, XButton, Selector, Datetime } from 'vux'
 
     export default {
@@ -64,11 +66,19 @@
             },
             register() {
                 axios.post('api/user/registerWechat', this.form).then(response => {
+                    let _this = this
                     this.$vux.alert.show({
                         content:response.data.message
                     })
+                    Store.dispatch('registerSuccess').then(response => {
+                        setTimeout(function() {
+                            _this.$router.push('user_index')
+                        }, 2000)
+                    })
                 }).catch(error => {
-
+                    this.$vux.alert.show({
+                        content:error.response.data.message
+                    })
                 })
             },
             getCode(dom){
@@ -100,7 +110,7 @@
                         this.is_verify = response.data.data;
                     }).catch(error => {
                         this.$vux.alert.show({
-                            content:response.data.message
+                            content:error.response.data.message
                         })
                     })
                 }else{

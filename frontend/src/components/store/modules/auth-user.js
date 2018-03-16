@@ -2,12 +2,15 @@ export default {
     state: {
         username: null,
         authenticated: false, //登录状态
+        mobile: null
     },
     mutations: {
         set_user_auth(state, payload) {
+            console.log(payload)
             state.username = payload.user.data.username
+            state.mobile = payload.user.data.mobile
+            console.log(state.mobile)
             state.authenticated = true
-            console.log('set_user_auth')
         },
         del_user_auth(state) {
             state.username = null
@@ -17,7 +20,6 @@ export default {
     actions: {
         setAuthUser({commit, dispatch}) {
             axios.post('/api/user/info').then(response => {
-                console.log('info')
                 commit({
                     type: 'set_user_auth',
                     user: response.data

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60)->default('');
             $table->tinyInteger('status')->default(0)->comment('状态');
             $table->string('name', 20)->default('')->comment('姓名');
-            $table->string('sex', 1)->default('')->comment('性别');
+            $table->string('sex', 1)->nullable()->default('')->comment('性别');
 
             /*--可选字段--*/
             $table->string('birthday', 13)->nullable()->comment('出生日期');

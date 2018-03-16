@@ -1,4 +1,5 @@
 <?php
+Route::get('/test', 'Api\System\SMSController@sendSMSCode');
 /*
 |--------------------------------------------------------------------------
 | 获取验证码
@@ -32,10 +33,10 @@ Route::get('{all}', 'RouterController@index')->where(['all' => '.*']);
 
 /*
 |--------------------------------------------------------------------------
-| 短信验证
+| 短信发送
 |--------------------------------------------------------------------------
 */
-Route::post('/sms/validate', 'Api\SMSController@getValidate');
+Route::post('api/sms/sendSMSCode', 'Api\System\SMSController@sendSMSCode');
 
 
 /*
@@ -80,6 +81,7 @@ Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
             Route::post('getEnterprise', 'UserController@getEnterprise');
             Route::post('isAdmin', 'UserController@isAdmin');
             Route::post('applyJoinEnterprise', 'UserController@applyJoinEnterprise');
+            Route::post('getRejectListForApplyWorker', 'UserController@getRejectListForApplyWorker');
         });
         /**
          * Wechat

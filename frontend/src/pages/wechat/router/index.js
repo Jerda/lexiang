@@ -59,25 +59,29 @@ router.beforeEach((to, from, next) => {
         let username = arr[2]
         Store.dispatch('loginRequest', {username: username, password: username}).then(response => {
             //如果用户没有完善信息，跳转至信息完善页面
-            axios.post('api/user/info').then(response => {
+            /*axios.post('api/user/info').then(response => {
                 if (!response.data.data.mobile) {
-                    // window.location.href = '/wechat.html#/register'
                     next('/register')
                 } else {
                     next('/user_index')
                 }
-            })
-        }).catch(error => {
-
+            })*/
+            if (Store.state.AuthUser.mobile) {
+                return next('/user_index')
+            } else {
+                return next('/register')
+            }
         })
     }
 
-
     if (to.meta.wechatAuth) {
         //验证是否登录
-        if (Store.state.authenticated || jwtToken.getToken()) {
-        // if (Store.state.AuthUser.authenticated) {
-            return next()
+        if (Store.state.AuthUser.authenticated || jwtToken.getToken()) {
+            if (Store.state.AuthUser.mobile) {
+                return next()
+            } else {
+                return next('/register')
+            }
         } else {
             axios.post('api/wechat/getOauthURL', {path:to.path}).then(response => {
                 window.localStorage.setItem('user_to_url', to.path)

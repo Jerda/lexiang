@@ -4,13 +4,13 @@
     <meta charset=utf-8>
     <meta name=viewport content="width=device-width,initial-scale=1">
     <title>wechat</title>
-    <link href="{{ asset('static/css/wechat.55f05442a637f788f42ff204f956121b.css') }}" rel=stylesheet>
+    <link href="{{ asset('static/css/wechat.01cf5c98d20e1c27e1c630c09bd3dba5.css') }}" rel=stylesheet>
 </head>
 <body>
 <div id=app></div>
-<script type=text/javascript src="{{ asset('static/js/manifest.8bed9069c4f0de45884e.js') }}"></script>
-<script type=text/javascript src="{{ asset('static/js/vendor.fda7ebf97bc4c5325e82.js') }}"></script>
-<script type=text/javascript src="{{ asset('static/js/wechat.cc26ab445ca8d8413aa4.js') }}"></script>
+<script type=text/javascript src="{{ asset('static/js/manifest.70574d0be8a00475d865.js') }}"></script>
+<script type=text/javascript src="{{ asset('static/js/vendor.5ab8d82ec3c9b7c90aa7.js') }}"></script>
+<script type=text/javascript src="{{ asset('static/js/wechat.b62bc237703918e8e6b4.js') }}"></script>
 </body>
 </html>
 <style>html {

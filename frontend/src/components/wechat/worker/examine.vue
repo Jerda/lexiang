@@ -17,7 +17,7 @@
                     <cell title="出生日期" v-model="user_info.user.birthday" class="change_height"></cell>
                     <cell title="邮箱" v-model="user_info.user.email" class="change_height"></cell>
                 </group>
-                    <x-button @click.native="agree(user_info.id)" style="width:94%;margin-top:2vh;">通过</x-button>
+                    <x-button @click.native="agree(user_info.user.id)" style="width:94%;margin-top:2vh;">通过</x-button>
                     <x-button @click.native="dialogShow = true" style="width:94%;">驳回</x-button>
                     <x-button @click.native="user_info.show = false" style="width:94%;">取消</x-button>
             </div>
@@ -76,6 +76,8 @@
                     this.$vux.alert.show({
                         content: response.data.message
                     })
+                    this.dialogShow = false
+                    this.user_info.show = false
                 }).catch(error => {
                     this.$vux.alert.show({
                         content: error.response.data.message
@@ -88,6 +90,7 @@
                     content: '确认同意用户申请',
                     onConfirm() {
                         axios.post('api/enterprise/agreeWorkerJoin', {user_id: user_id}).then(response => {
+                            _this.user_info.show = false
                             _this.getExamineWorkers()
                             _this.$emit('change')
                         }).catch(error => {
