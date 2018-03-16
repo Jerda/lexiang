@@ -138,7 +138,7 @@
         color:white;
     }
     .change_btn_height_{
-        height:5vh;
+        height:7vw;
         line-height:25%;
     }
 </style>

@@ -33,7 +33,7 @@
             getRefuseMes(){
                 axios.post('api/user/getRejectListForApplyWorker').then(response => {
                     this.refuse_mes = response.data.data;
-                    console.log(this.refuse_mes)
+                    // console.log(this.refuse_mes)
                 })
             }
         },

@@ -13,6 +13,9 @@ export default {
             jwtToken.setToken(tokenResponse.token)
             dispatch('setAuthUser')
         },
+        registerSuccess({dispatch}) {
+            dispatch('setAuthUser')
+        },
         logoutRequest({dispatch}) {
             return axios.post('/api/user/logout').then(response => {
                 jwtToken.removeToken()
